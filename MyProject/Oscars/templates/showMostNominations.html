@@ -1,0 +1,40 @@
+<!-- Load static directory defined in settings.py -->
+{% load static %}
+<html>
+	<head>
+		<!-- Load CSS stylesheet from static directory -->
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" >
+	</head>
+	<body>
+		<!-- Show the appropriate heading depending on the type -->
+		{% if type == "actor" %}
+			<h2>Actors with most nominations</h2>
+		{% elif type == "actress" %}
+			<h2>Actresses with most nominations</h2>
+		{% elif type == "director" %}
+			<h2>Directors with most nominations</h2>
+		{% endif %}		<!-- End if -->
+		
+		<table>
+			<!-- Show appropriate table headers depending on the type -->
+			{% if type == "actor" or type == "supporting actor" %}
+				<th>Actor</th>
+			{% elif type == "actress" or type == "supporting actress" %}
+				<th>Actress</th>
+			{% elif type == "director" %}
+				<th>Director</th>
+			{% endif %}		<!-- End if -->
+				<th>Nominations</th>
+				<th>Wins</th>
+				
+			<!-- Loop through results set and show values in each row-->
+			{% for name, total_noms, total_wins in results %}
+				<tr>
+					<td>{{ name }}</td>
+					<td>{{ total_noms }}</td>
+					<td>{{ total_wins }} </td>
+				</tr>
+			{% endfor %}	<!-- End for -->
+		</table>
+	</body>
+</html>

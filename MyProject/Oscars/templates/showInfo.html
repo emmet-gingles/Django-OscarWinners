@@ -1,0 +1,30 @@
+<!-- Load static directory defined in settings.py -->
+{% load static %}
+<html>
+	<head>
+		<!-- Load CSS stylesheet from static directory -->
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" >
+	</head>
+	<body>
+		
+		<!-- Check there are one or more results -->
+		{% if results|length > 0 %}
+			<!-- title filter is used to capitalize each word of the name variable -->
+			<h2>{{ name|title }} nominations</h2>				
+			<table>
+				<th>Year</th>
+				<th>Film</th>
+					
+				<!-- Loop through results set and show values in each row -->
+				{% for year, film, winner in results %}
+					<!-- If it is a winner then apply CSS class to the table row -->
+					<tr {% if winner == "Yes" %} class="winner" {% endif %}>
+						<td>{{ year }}</td>
+						<td>{{ film }}</td>
+					</tr>
+				{% endfor %}	<!-- End for loop -->			
+			</table>
+		
+		{% endif %}	<!-- End if -->
+	</body>
+</html>

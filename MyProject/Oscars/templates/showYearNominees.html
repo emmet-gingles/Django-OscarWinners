@@ -1,0 +1,54 @@
+<!-- Load static directory defined in settings.py -->
+{% load static %}
+<html>
+	<head>
+		<!-- Load CSS stylesheet from static directory -->
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" >
+	</head>
+	<body>
+		<h1>{{ year }} Nominees</h1>
+		<h2>Best Picture</h2>
+		<!-- Loop through results set and show values in each paragraph -->
+		{% for film, producer, winner in picture %}
+			<!-- If it is a winner then apply CSS class to the table row -->
+			<p {% if winner == "Yes" %} class="winner" {% endif %} ><b>Film:</b> {{ film }} <br>
+				<b>Producers:</b> {{ producer }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<h2>Best Director</h2>
+		{% for name, film, winner in director %}
+			<p {% if winner == "Yes" %} class="winner" {% endif %} ><b>Director:</b> {{ name }} <br>
+			<b>Film:</b> {{ film }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<h2>Best Actor</h2>
+		{% for name, film, winner in actor %}
+			<p {% if winner == "Yes" %} class="winner" {% endif %} ><b>Actor:</b> {{ name }} <br>
+			<b>Film:</b> {{ film }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<h2>Best Actress</h2>
+		{% for name, film, winner in actress %}
+			<p {% if winner == "Yes" %} class="winner" {% endif %} ><b>Actor:</b> {{ name }} <br>
+			<b>Film:</b> {{ film }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<!-- There were no awards for best supporting actor/actress before 1936 so the following two if statements are necessary -->
+		{% if supporting_actor|length > 0 %}
+			<h2>Best Supporting Actor</h2>
+			{% for name, film, winner in supporting_actor %}
+				<p {% if winner == "Yes" %} class="winner" {% endif %} ><b>Actor:</b> {{ name }} <br>
+				<b>Film:</b> {{ film }}</p>
+			{% endfor %}	<!-- End for -->
+		{% endif %}
+		
+		{% if supporting_actress|length > 0 %}
+			<h2>Best Supporting Actress</h2>
+			{% for name, film, winner in supporting_actress %}
+				<p {% if winner == "Yes" %} class="winner" {% endif %} ><b>Actress:</b> {{ name }} <br>
+				<b>Film:</b> {{ film }}</p>
+			{% endfor %}	<!-- End for -->
+		{% endif %}
+
+	</body>
+</html>

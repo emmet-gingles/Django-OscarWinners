@@ -1,0 +1,52 @@
+<!-- Load static directory defined in settings.py -->
+{% load static %}
+<html>
+	<head>
+		<!-- Load CSS stylesheet from static directory -->
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" >
+	</head>
+	<body>
+		<h1>{{ year }} Winners</h1>
+		<h2>Best Picture</h2>
+		<!-- Loop through results set and show values in each paragraph -->
+		{% for film, producer in picture %}
+			<p><b>Film:</b> {{ film }}</p>
+			<p><b>Producers:</b> {{  producer }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<h2>Best Director</h2>
+		{% for name, film in director %}
+			<p><b>Director:</b> {{ name }}</p>
+			<p><b>Film:</b> {{ film }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<h2>Best Actor</h2>
+		{% for name, film in actor %}
+			<p><b>Actor:</b> {{ name }}</p>
+			<p><b>Film:</b> {{ film }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<h2>Best Actress</h2>
+		{% for name, film in actress %}
+			<p><b>Actor:</b> {{ name }}</p>
+			<p><b>Film:</b> {{ film }}</p>
+		{% endfor %}	<!-- End for -->
+		
+		<!-- There were no awards for best supporting actor/actress before 1936 so the following two if statements are necessary -->
+		{% if supporting_actor|length > 0 %}
+			<h2>Best Supporting Actor</h2>
+			{% for name, film in supporting_actor %}
+				<p><b>Actor:</b> {{ name }}</p>
+				<p><b>Film:</b> {{ film }}</p>
+			{% endfor %}	<!-- End for -->
+		{% endif %}
+		
+		{% if supporting_actress|length > 0 %}
+			<h2>Best Supporting Actress</h2>
+			{% for name, film in supporting_actress %}
+				<p><b>Actress:</b> {{ name }}</p>
+				<p><b>Film:</b> {{ film }}</p>
+			{% endfor %}	<!-- End for -->
+		{% endif %}
+	</body>
+</html>

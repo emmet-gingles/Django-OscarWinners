@@ -1,0 +1,54 @@
+<!-- Load static directory defined in settings.py -->
+{% load static %}
+<html>
+	<head>
+		<!-- Load CSS stylesheet from static directory -->
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" >
+	</head>
+	<body>
+		<!-- title filter is used to capitalize each word of the type variable -->
+		<h2>Best {{ type|title }} Nominees</h2>
+		
+		<table>
+			<th>Year</th>
+			<!-- Show appropriate table headers depending on type -->
+			{% if type == "actor" or type == "supporting actor" %}
+				<th>Actor</th>
+				<th>Film</th>
+			{% elif type == "actress" or type == "supporting actress" %}
+				<th>Actress</th>
+				<th>Film</th>
+			{% elif type == "director" %}
+				<th>Director</th>
+				<th>Film</th>
+			{% else %}
+				<th>Film</th>
+				<th>Producers</th>
+			{% endif %}		<!-- End if -->
+
+			<!-- If it is best picture -->
+			{% if type == "picture" %}
+				<!-- Loop through results set and show values in each row -->
+				{% for id, year, film, nominee, winner in results %}
+				<!-- If it is a winner then apply CSS class to the table row -->
+				<tr {% if winner == "Yes" %} class="winner" {% endif %} >
+					<td>{{ year }}</td>
+					<td>{{ film }}</td>
+					<td>{{ nominee }}</td>
+				</tr>
+				{% endfor %}	<!-- End for -->
+			<!-- For everything else -->
+			{% else %}
+				<!-- Loop through results set and show values in each row -->
+				{% for id, year, actor, film, winner in results %}
+				<!-- If it is a winner then apply CSS class to the table row -->
+				<tr {% if winner == "Yes" %} class="winner" {% endif %} >
+					<td>{{ year }} </td>
+					<td>{{ actor }} </td>
+					<td>{{ film }} </td>
+				</tr>
+				{% endfor %}	<!-- End for -->
+			{% endif %}		<!-- End if -->							
+		</table>
+	</body>
+</html>
